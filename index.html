@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA - Saluto</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input {
+            padding: 10px;
+            margin: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Benvenuto nella SPA</h1>
+    <input type="text" id="nome" placeholder="Inserisci il tuo nome">
+    <input type="text" id="cognome" placeholder="Inserisci il tuo cognome">
+    <button id="saluto-btn">Ciao!</button>
+    <p id="saluto"></p>
+
+    <script>
+        $('#saluto-btn').on('click', function() {
+            var nome = $('#nome').val();
+            var cognome = $('#cognome').val();
+
+            $.ajax({
+                url: '/saluta',
+                method: 'POST',
+                data: {
+                    nome: nome,
+                    cognome: cognome
+                },
+                success: function(response) {
+                    $('#saluto').text(response.saluto);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Errore nella richiesta: ", status, error);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
